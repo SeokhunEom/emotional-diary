@@ -3,7 +3,7 @@ import React, { createContext, useReducer, useRef } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 import New from "./pages/New";
-import Edit from "./pages/Edint";
+import Edit from "./pages/Edit";
 import Diary from "./pages/Diary";
 
 const reducer = (state, action) => {
@@ -36,8 +36,41 @@ const reducer = (state, action) => {
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
+const dummyData = [
+  {
+    id: 1,
+    emotion: 1,
+    content: "오늘의일기 1번",
+    date: 1703218261439,
+  },
+  {
+    id: 2,
+    emotion: 2,
+    content: "오늘의일기 2번",
+    date: 1703218261440,
+  },
+  {
+    id: 3,
+    emotion: 3,
+    content: "오늘의일기 3번",
+    date: 1703218261441,
+  },
+  {
+    id: 4,
+    emotion: 4,
+    content: "오늘의일기 4번",
+    date: 1703218261442,
+  },
+  {
+    id: 5,
+    emotion: 5,
+    content: "오늘의일기 5번",
+    date: 1703218261443,
+  },
+];
+
 function App() {
-  const [data, dispatch] = useReducer(reducer, []);
+  const [data, dispatch] = useReducer(reducer, dummyData);
   const dataId = useRef(0);
 
   const onCreate = (date, content, emotion) => {
