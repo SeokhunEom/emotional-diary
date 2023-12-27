@@ -38,42 +38,14 @@ const reducer = (state, action) => {
 export const DiaryStateContext = createContext();
 export const DiaryDispatchContext = createContext();
 
-const dummyData = [
-  {
-    id: 1,
-    emotion: 1,
-    content: "오늘의일기 1번",
-    date: 1703218261439,
-  },
-  {
-    id: 2,
-    emotion: 2,
-    content: "오늘의일기 2번",
-    date: 1703218261440,
-  },
-  {
-    id: 3,
-    emotion: 3,
-    content: "오늘의일기 3번",
-    date: 1703218261441,
-  },
-  {
-    id: 4,
-    emotion: 4,
-    content: "오늘의일기 4번",
-    date: 1703218261442,
-  },
-  {
-    id: 5,
-    emotion: 5,
-    content: "오늘의일기 5번",
-    date: 1703218261443,
-  },
-];
-
 function App() {
   const [data, dispatch] = useReducer(reducer, []);
   const dataId = useRef(0);
+
+  useEffect(() => {
+    const titleElement = document.getElementsByTagName("title")[0];
+    titleElement.innerText = `감정 일기장`;
+  }, []);
 
   useEffect(() => {
     const localData = localStorage.getItem("diary");
@@ -81,8 +53,10 @@ function App() {
       const diaryList = JSON.parse(localData).sort(
         (a, b) => parseInt(b.id) - parseInt(a.id)
       );
-      dataId.current = parseInt(diaryList[0].id) + 1;
-      dispatch({ type: "INIT", data: diaryList });
+      if (diaryList.length > 0) {
+        dataId.current = parseInt(diaryList[0].id) + 1;
+        dispatch({ type: "INIT", data: diaryList });
+      }
     }
   }, []);
 
